@@ -21,6 +21,7 @@ export async function createCheckoutSession() {
         },
       ],
       mode: "subscription",
+      allow_promotion_codes: true, // Enable coupon/promotion code field
       success_url: `${
         process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
       }/success?session_id={CHECKOUT_SESSION_ID}`,
