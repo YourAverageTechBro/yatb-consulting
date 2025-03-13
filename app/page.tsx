@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/accordion";
 import { MobileNav } from "./components/MobileNav";
 import Image from "next/image";
+import { CheckoutButton } from "./components/CheckoutButton";
 
 export default function Home() {
   return (
@@ -48,12 +49,20 @@ export default function Home() {
           <a href="#faq" className="hover:text-primary transition-colors">
             FAQ
           </a>
+          <a
+            href="https://billing.stripe.com/p/login/fZedRag2Qd16fPG8ww"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            Manage Subscription
+          </a>
         </nav>
         <MobileNav />
       </header>
 
       {/* Hero Section */}
-      <section className="container max-w-3xl mx-auto py-24 md:py-32 flex flex-col items-center text-center px-4">
+      <section className="container max-w-3xl mx-auto py-16 flex flex-col items-center text-center px-4">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
           I will help you build + market your app
         </h1>
@@ -247,7 +256,7 @@ export default function Home() {
             <CardFooter>
               <Button className="w-full font-mono" size="lg">
                 <a
-                  href="https://whop.com/your-average-tech-bro/"
+                  href="https://cal.com/youraveragetechbro/60min"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -295,18 +304,47 @@ export default function Home() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full font-mono" size="lg">
-                <a
-                  href="https://whop.com/your-average-tech-bro/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Join Now
-                </a>
-              </Button>
+              <CheckoutButton />
             </CardFooter>
           </Card>
         </div>
+      </section>
+
+      <Separator className="max-w-3xl mx-auto" />
+
+      {/* Manage Subscription Section */}
+      <section className="container max-w-3xl mx-auto py-16 px-4 my-8 text-center">
+        <h2 className="text-3xl font-bold mb-6">Already a subscriber?</h2>
+        <p className="text-lg mb-8 font-mono">
+          Manage your subscription, update payment methods, or view billing
+          history.
+        </p>
+        <Button variant="outline" size="lg" className="font-mono">
+          <a
+            href="https://billing.stripe.com/p/login/fZedRag2Qd16fPG8ww"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            Manage Subscription
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-external-link"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </Button>
       </section>
 
       <Separator className="max-w-3xl mx-auto" />

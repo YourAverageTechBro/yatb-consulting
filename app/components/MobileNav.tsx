@@ -12,7 +12,7 @@ export function MobileNav() {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-[250px] sm:w-[300px]">
-        <nav className="flex flex-col gap-6 mt-10">
+        <nav className="flex flex-col gap-6 ml-6 mt-10">
           <a
             href="#services"
             className="text-lg font-medium hover:text-primary transition-colors"
@@ -36,6 +36,14 @@ export function MobileNav() {
             className="text-lg font-medium hover:text-primary transition-colors"
           >
             FAQ
+          </a>
+          <a
+            href="https://billing.stripe.com/p/login/fZedRag2Qd16fPG8ww"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg font-medium hover:text-primary transition-colors"
+          >
+            Manage Subscription
           </a>
         </nav>
       </SheetContent>
