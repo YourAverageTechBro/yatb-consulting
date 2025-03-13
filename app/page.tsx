@@ -176,7 +176,6 @@ export default function Home() {
           Should you purchase this service?
         </h2>
         <div className="flex flex-col gap-4 text-md font-mono">
-          <p>The honest answer is no, you should not.</p>
           <p>
             I publish everything I know on my Youtube/Instagram/Tiktok accounts.
           </p>
