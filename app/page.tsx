@@ -269,7 +269,7 @@ export default function Home() {
             <CardHeader>
               <CardTitle className="text-2xl">Monthly Coaching</CardTitle>
               <CardDescription className="text-xl font-bold">
-                $999.00 / month
+                $499.00 / month
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 font-mono">
