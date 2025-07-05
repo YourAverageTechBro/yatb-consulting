@@ -2,6 +2,7 @@
 
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 // Initialize Stripe with the secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -10,6 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 export async function createCheckoutSession() {
   let session;
+  const origin = (await headers()).get("origin");
   try {
     // Create a checkout session with Stripe
     session = await stripe.checkout.sessions.create({
@@ -22,12 +24,8 @@ export async function createCheckoutSession() {
       ],
       mode: "subscription",
       allow_promotion_codes: true, // Enable coupon/promotion code field
-      success_url: `${
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/#pricing`,
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/#pricing`,
       metadata: {
         productType: "monthly_coaching",
       },
@@ -40,5 +38,23 @@ export async function createCheckoutSession() {
   // Redirect to the Stripe checkout page
   if (session.url) {
     redirect(session.url);
+  }
+}
+
+export async function verifyCheckoutSession(sessionId: string) {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    return {
+      success: session.payment_status === "paid",
+      customerEmail: session.customer_email,
+      metadata: session.metadata,
+    };
+  } catch (error) {
+    console.error("Error verifying checkout session:", error);
+    return {
+      success: false,
+      customerEmail: null,
+      metadata: null,
+    };
   }
 }

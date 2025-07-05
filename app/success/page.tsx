@@ -1,8 +1,27 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { verifyCheckoutSession } from "@/app/actions/stripe";
+import { redirect } from "next/navigation";
 
-export default function SuccessPage() {
+export default async function SuccessPage({
+  searchParams,
+}: {
+  searchParams: { session_id?: string };
+}) {
+  // Check if session_id is provided
+  if (!searchParams.session_id) {
+    redirect("/");
+  }
+
+  // Verify the checkout session
+  const { success } = await verifyCheckoutSession(searchParams.session_id);
+
+  // If payment wasn't successful, redirect to home
+  if (!success) {
+    redirect("/");
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="max-w-xl text-center">
@@ -17,13 +36,30 @@ export default function SuccessPage() {
 
           <div className="text-left font-mono space-y-6">
             <div className="flex flex-col gap-2">
-              <h3 className="font-bold">1. Add me on Discord</h3>
-              <p>This is where our 1:1 chatting will occur</p>
-              <div className="flex items-center justify-center bg-background p-3 rounded-md">
-                <code className="font-bold">youraveragetechbro</code>
+              <h3 className="font-bold">1. Contact me for 1:1 chatting</h3>
+              <p>Choose your preferred messaging platform:</p>
+              
+              <div className="space-y-3">
+                <div className="bg-background p-3 rounded-md">
+                  <p className="text-sm font-semibold mb-1">Discord:</p>
+                  <code className="font-bold">youraveragetechbro</code>
+                </div>
+                
+                <div className="bg-background p-3 rounded-md">
+                  <p className="text-sm font-semibold mb-1">WhatsApp:</p>
+                  <a
+                    href="https://wa.me/17143659744"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-bold"
+                  >
+                    +1 (714) 365-9744
+                  </a>
+                </div>
               </div>
+              
               <p className="text-sm mt-2 text-muted-foreground">
-                If you have any issues with Discord, please email me at{" "}
+                If you have any issues, please email me at{" "}
                 <a
                   href="mailto:dohyun@youraveragetechbro.com"
                   className="text-primary hover:underline"
