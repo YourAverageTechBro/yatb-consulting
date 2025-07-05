@@ -7,15 +7,16 @@ import { redirect } from "next/navigation";
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const { session_id } = (await searchParams) as { session_id?: string };
   // Check if session_id is provided
-  if (!searchParams.session_id) {
+  if (!session_id) {
     redirect("/");
   }
 
   // Verify the checkout session
-  const { success } = await verifyCheckoutSession(searchParams.session_id);
+  const { success } = await verifyCheckoutSession(session_id);
 
   // If payment wasn't successful, redirect to home
   if (!success) {
@@ -38,13 +39,13 @@ export default async function SuccessPage({
             <div className="flex flex-col gap-2">
               <h3 className="font-bold">1. Contact me for 1:1 chatting</h3>
               <p>Choose your preferred messaging platform:</p>
-              
+
               <div className="space-y-3">
                 <div className="bg-background p-3 rounded-md">
                   <p className="text-sm font-semibold mb-1">Discord:</p>
                   <code className="font-bold">youraveragetechbro</code>
                 </div>
-                
+
                 <div className="bg-background p-3 rounded-md">
                   <p className="text-sm font-semibold mb-1">WhatsApp:</p>
                   <a
@@ -57,7 +58,7 @@ export default async function SuccessPage({
                   </a>
                 </div>
               </div>
-              
+
               <p className="text-sm mt-2 text-muted-foreground">
                 If you have any issues, please email me at{" "}
                 <a
